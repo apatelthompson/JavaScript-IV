@@ -47,8 +47,10 @@ class Student extends Person{
       this.grade = childAttributes.grade;
     }
   listsSubjects() {
-      return `${this.favSubjects}`;
-  }
+      this.favSubjects.forEach(subject =>
+      console.log(subject));
+    };
+
   PRAssignment(subject) {
       return `${this.newName} has submitted a PR for ${subject}.`;
   }
@@ -62,7 +64,6 @@ class Student extends Person{
       }
       console.log(`${this.newName} may graduate!`);
   }
-
   }
 // Child
 
@@ -186,8 +187,8 @@ class ProjectManager extends Instructor{
   console.log(nisa.grade);
 
   kevin.graduate(dan);
+  isaiah.listsSubjects();
 
-  console.log(isaiah.listsSubjects());
   console.log(kevin.PRAssignment('JS-II'));
   console.log(nisa.sprintChallenge('JS Fundamentals'));
 
