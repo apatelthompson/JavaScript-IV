@@ -26,6 +26,16 @@ class Instructor extends Person{
   grade(student, subject) {
     return `${student} receives a perfect score on ${subject}.`
     }
+  assignGrade(student) {
+    student.grade += Math.round(Math.random()*20)-10;
+    if (student.grade < 0) {
+      student.grade = 0;
+    }
+    if (student.grade > 100) {
+      student.grade = 100;
+    }
+  }
+
   }
 
 class Student extends Person{
@@ -34,16 +44,25 @@ class Student extends Person{
       this.previousBackground = childAttributes.previousBackground;
       this.className = childAttributes.className;
       this.favSubjects = childAttributes.favSubjects;
+      this.grade = childAttributes.grade;
     }
   listsSubjects() {
       return `${this.favSubjects}`;
   }
   PRAssignment(subject) {
-      return `${this.student.newName} has submitted a PR for ${subject}.`;
+      return `${this.newName} has submitted a PR for ${subject}.`;
   }
   sprintChallenge(subject) {
-      return `${this.student.newName} has begun sprint challenge on ${subject}.`;
+      return `${this.newName} has begun sprint challenge on ${subject}.`;
   }
+  graduate(instObj) {
+      while (this.grade < 70) {
+        console.log(this.grade);
+        instObj.assignGrade(this);
+      }
+      console.log(`${this.newName} may graduate!`);
+  }
+
   }
 // Child
 
@@ -54,7 +73,7 @@ class ProjectManager extends Instructor{
       this.favInstructor = grandchildAttributes.favInstructor;
     }
   standUp(channel) {
-      return `${this.newName} announces to @${channel}, @channel standup times!`;
+      return `${this.newName} announces to @${channel}, @${channel} standup times!`;
   }
   debugsCode(student, subject) {
       return `${this.newName} debugs ${student}'s code on ${subject}`
@@ -99,6 +118,7 @@ class ProjectManager extends Instructor{
     previousBackground: 'High School last month',
     className: 'Web21',
     favSubjects: ['Html', 'CSS', 'JavaScript'],
+    grade: 84
 });
     const kevin = new Student({
     name: "Kevin",
@@ -107,6 +127,7 @@ class ProjectManager extends Instructor{
     previousBackground: "Table Games Dealer",
     className: "WEB21",
     favSubjects: ['Html', 'CSS', 'JavaScript'],
+    grade: 40
 });
     const nisa = new Student({
     name: 'Nisa',
@@ -115,6 +136,7 @@ class ProjectManager extends Instructor{
     previousBackground: 'Debt Collector',
     className: 'Web21',
     favSubjects: ['Html', 'CSS', 'JavaScript'],
+    grade: 96
 });
 
 
@@ -152,6 +174,23 @@ class ProjectManager extends Instructor{
       catchPhrase: "That looks AWESOME",
   });
 
-
   console.log(dan.speak());
+  console.log(julie.demo('Flexbox'));
+  console.log(sara.grade('Nisa','JS-I'));
+  console.log(julie.catchPhrase);
+
+  console.log(nisa.grade);
+  dan.assignGrade(nisa);
+  console.log(nisa.grade);
+  dan.assignGrade(nisa);
+  console.log(nisa.grade);
+
+  kevin.graduate(dan);
+
+  console.log(isaiah.listsSubjects());
+  console.log(kevin.PRAssignment('JS-II'));
+  console.log(nisa.sprintChallenge('JS Fundamentals'));
+
+
   console.log(mary.standUp('general'));
+  console.log(brandon.debugsCode('Isaiah', 'React'));
